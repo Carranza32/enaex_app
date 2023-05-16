@@ -8,5 +8,9 @@ class Routes {
 			name: '/login',
 			page: () => const LoginScreen(),
 		),
+    GetPage(
+      name: '/tabs',
+      page: () => TabScreen(),
+    ),
 	];
 }

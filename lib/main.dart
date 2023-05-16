@@ -13,12 +13,14 @@ class MyApp extends StatelessWidget {
 		return GetMaterialApp(
 			title: 'Enaex App',
 			getPages: Routes.route,
-			initialRoute: '/login',
+			initialRoute: '/tabs',
 			locale: const Locale('es', 'ES'),
 			translations: LanguageTranslations(),
 			fallbackLocale: const Locale('es'),
 			debugShowCheckedModeBanner: false,
 			theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.red,
 				visualDensity: VisualDensity.adaptivePlatformDensity,
 				appBarTheme: const AppBarTheme(
 					color: Colors.white,

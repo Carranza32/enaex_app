@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:enaex_app/src/constants.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -18,15 +19,25 @@ class LoginScreen extends StatelessWidget {
 										child: Column(
 											children: [
 												TextFormField(
-													decoration: const InputDecoration(
-														labelText: "Usuario",
-													),
+													decoration: formFieldStyle().copyWith(
+                            labelText: "Usuario",
+                          )
 												),
 												TextFormField(
 													decoration: const InputDecoration(
 														labelText: "Contraseña",
 													),
 												),
+                        FilledButton(
+                          onPressed: () {},
+                          child: const Text("Guardar"),
+                          style: primaryButtonStyle(),
+                        ),
+                        FilledButton(
+                          onPressed: () {},
+                          child: const Text("Guardar"),
+                          style: primaryButtonStyle(),
+                        ),
 											],
 										),
 									)
