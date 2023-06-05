@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
 			fallbackLocale: const Locale('es'),
 			debugShowCheckedModeBanner: false,
 			theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.red,
+        useMaterial3: false,
+        // colorSchemeSeed: Colors.red,
+        primaryColor: Colors.blue,
 				visualDensity: VisualDensity.adaptivePlatformDensity,
 				appBarTheme: const AppBarTheme(
 					color: Colors.white,

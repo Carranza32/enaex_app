@@ -12,9 +12,6 @@ class TabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Tabs"),
-        ),
         body: _Pages(),
         bottomNavigationBar: const NavigationWidget(),
       ),
