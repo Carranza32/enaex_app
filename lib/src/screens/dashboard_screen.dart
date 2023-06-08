@@ -1,6 +1,7 @@
 import 'package:enaex_app/src/widgets/my_segmented_control.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:gauge_indicator/gauge_indicator.dart';
 
 
 class DashboardScreen extends StatelessWidget {
@@ -9,6 +10,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 		final List<double> data = [5, 10, 7, 15, 12, 9]; // Datos de ejemplo
+    final double value = 65.0; // Datos de ejemplo
 
     return SafeArea(
 			child: Scaffold(
@@ -37,7 +39,7 @@ class DashboardScreen extends StatelessWidget {
 								children: [
 									CircleAvatar(
 										radius: 30.0,
-										backgroundImage: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg'),
+										backgroundImage: AssetImage("assets/Emma_Watson_2013.jpg"),
 										backgroundColor: Colors.transparent,
 									),
 									SizedBox(width: 15),
@@ -220,7 +222,27 @@ class DashboardScreen extends StatelessWidget {
 											children: [
 												Text("Cumplimiento % OT", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
 												SizedBox(height: 5),
-												Text("445", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20)),
+												Text("65%", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+                        AnimatedRadialGauge(
+                          initialValue: 65,
+                          child: const Text('65%'),
+                          value: 65,
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.elasticOut,
+                          progressBar: const GaugeRoundedProgressBar(
+                            color: Color(0xFFB4C2F8),
+                          ),
+                          axis: GaugeAxis(
+                          min: 0,
+                          max: 100,
+                          degrees: 180,
+                          /// Set the background color and axis thickness.
+                          style: const GaugeAxisStyle(
+                              thickness: 20,
+                              background: Color(0xFFDFE2EC),
+                            ),
+                          ),
+                        )
 											],
 										),
 									),

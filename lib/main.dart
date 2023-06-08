@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
 			fallbackLocale: const Locale('es'),
 			debugShowCheckedModeBanner: false,
 			theme: ThemeData(
+        platform: TargetPlatform.iOS,
         useMaterial3: false,
         // colorSchemeSeed: Colors.red,
         primaryColor: const Color(0xff3e444e),

@@ -133,7 +133,94 @@ class TaskDetailScreen extends StatelessWidget {
 							children: [
 								OutlinedButton(
 									style: loginOutlineGrayButtonStyle(),
-									onPressed: () => {},
+									onPressed: () => {
+                    Get.defaultDialog(
+                      title: "¿Por qué rechazas la tarea?",
+                      content: Column(
+                        children: [
+                          RadioListTile(
+                            title: const Text("Ut enim ad minima veniam, quis Nostrum."),
+                            value: 1,
+                            groupValue: 1,
+                            onChanged: (value) {},
+                          ),
+                          RadioListTile(
+                            title: const Text("Quis autem vel eum iure reprehenderit qui"),
+                            value: 2,
+                            groupValue: 1,
+                            onChanged: (value) {},
+                          ),
+                          RadioListTile(
+                            title: const Text("At vero eos et accusamus et iusto odio"),
+                            value: 3,
+                            groupValue: 1,
+                            onChanged: (value) {},
+                          ),
+                          RadioListTile(
+                            title: const Text("Et harum quidem rerum facilis est et expedita."),
+                            value: 4,
+                            groupValue: 1,
+                            onChanged: (value) {},
+                          ),
+                        ],
+                      ),
+                      cancel: OutlinedButton(
+                        style: loginOutlineGrayButtonStyle(),
+                        onPressed: () => Get.back(),
+                        child: const Text("Cancelar"),
+                      ),
+                      confirm: ElevatedButton(
+                        style: primaryButtonStyle(),
+                        onPressed: () {
+                          Get.back();
+                          
+                          Get.defaultDialog(
+                            title: "Digite PIN de verificación",
+                            content: Pinput(
+                              length: length,
+                              controller: controller,
+                              focusNode: focusNode,
+                              defaultPinTheme: defaultPinTheme,
+                              obscureText: true,
+                              focusedPinTheme: defaultPinTheme.copyWith(
+                                height: 68,
+                                width: 64,
+                                decoration: defaultPinTheme.decoration!.copyWith(
+                                  border: Border.all(color: borderColor),
+                                ),
+                              ),
+                              errorPinTheme: defaultPinTheme.copyWith(
+                                decoration: BoxDecoration(
+                                  color: errorColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onChanged: (String pin) {
+                                print('Current pin:$pin');
+                              },
+                              onSubmitted: (String pin) {
+                                print('Current pin:$pin');
+                              },
+                            ),
+                            cancel: OutlinedButton(
+                              style: loginOutlineGrayButtonStyle(),
+                              onPressed: () => Get.back(),
+                              child: const Text("Cancelar"),
+                            ),
+                            confirm: ElevatedButton(
+                              style: primaryButtonStyle(),
+                              onPressed: () {
+                                Get.back();
+                                Get.back();
+                              },
+                              child: const Text("Continuar"),
+                            ),
+                          );
+                        },
+                        child: const Text("Continuar"),
+                      ),
+                    )
+                  },
 									child: const Text("Rechazar"),
 								),
 
