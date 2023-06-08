@@ -16,7 +16,8 @@ class DashboardScreen extends StatelessWidget {
 					title: const Text('Dashboard'),
 				),
 				body: ListView(
-					children: [
+					children: [					
+
 						Container(
 							margin: EdgeInsets.all(20),
 							padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -52,7 +53,14 @@ class DashboardScreen extends StatelessWidget {
 							),
 						),
 					
-						const SizedBox(height: 20),
+						const SizedBox(height: 0),
+
+						Container(
+							alignment: Alignment.center,
+							child: Text("Resumen PTS Digital", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+						),
+
+						const Divider(),
 
 						Container(
 							padding: const EdgeInsets.all(20),
@@ -115,32 +123,40 @@ class DashboardScreen extends StatelessWidget {
 							alignment: Alignment.center,
 							margin: EdgeInsets.all(20),
 							height: 75,
-							child: MySegmentedControl(isStretch: true, children: <int, Widget>{
+							child: SingleChildScrollView(
+								scrollDirection: Axis.horizontal,
+								child: MySegmentedControl(isStretch: false, children: <int, Widget>{
 								0: Text('Aislación'),
 								1: Text('Andamios'),
 								2: Text('Caldería'),
 								3: Text('Confiabilidad'),
-							}),
-						),
-						Container(
-							alignment: Alignment.center,
-							margin: EdgeInsets.all(20),
-							height: 75,
-							child: MySegmentedControl(isStretch: false, children: <int, Widget>{
 								4: Text('Control'),
 								5: Text('Eléctrica'),
 								6: Text('Instrumentación'),
-							}),
-						),
-						Container(
-							alignment: Alignment.center,
-							margin: EdgeInsets.all(20),
-							height: 75,
-							child: MySegmentedControl(isStretch: false, children: <int, Widget>{
 								7: Text('Mecánica'),
 								8: Text('Servicios'),
 							}),
+							),
 						),
+						// Container(
+						// 	alignment: Alignment.center,
+						// 	margin: EdgeInsets.all(20),
+						// 	height: 75,
+						// 	child: MySegmentedControl(isStretch: false, children: <int, Widget>{
+						// 		4: Text('Control'),
+						// 		5: Text('Eléctrica'),
+						// 		6: Text('Instrumentación'),
+						// 	}),
+						// ),
+						// Container(
+						// 	alignment: Alignment.center,
+						// 	margin: EdgeInsets.all(20),
+						// 	height: 75,
+						// 	child: MySegmentedControl(isStretch: false, children: <int, Widget>{
+						// 		7: Text('Mecánica'),
+						// 		8: Text('Servicios'),
+						// 	}),
+						// ),
 
 						const SizedBox(height: 20),
 
@@ -157,8 +173,10 @@ class DashboardScreen extends StatelessWidget {
 										crossAxisAlignment: CrossAxisAlignment.center,
 										mainAxisAlignment: MainAxisAlignment.spaceAround,
 										children: [
-											Container(												
+											Expanded(
+												child: Container(												
 												padding: const EdgeInsets.all(20),
+												margin: const EdgeInsets.symmetric(horizontal: 5),
 												decoration: BoxDecoration(
 													borderRadius: BorderRadius.circular(10),
 													color: Colors.white,
@@ -171,8 +189,11 @@ class DashboardScreen extends StatelessWidget {
 													],
 												),
 											),
-											Container(												
+											),
+											Expanded(
+												child: Container(												
 												padding: const EdgeInsets.all(20),
+												margin: const EdgeInsets.symmetric(horizontal: 5),
 												decoration: BoxDecoration(
 													borderRadius: BorderRadius.circular(10),
 													color: Colors.white,
@@ -184,6 +205,7 @@ class DashboardScreen extends StatelessWidget {
 														Text("109", style: TextStyle(color: Color(0xff3e444e), fontWeight: FontWeight.bold, fontSize: 20)),
 													],
 												),
+											),
 											)
 										],
 									),

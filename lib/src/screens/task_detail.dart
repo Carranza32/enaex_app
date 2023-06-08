@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 import '../constants.dart';
 
 class TaskDetailScreen extends StatelessWidget {
@@ -7,6 +8,22 @@ class TaskDetailScreen extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
+		const length = 4;
+    const borderColor = Color.fromRGBO(114, 178, 238, 1);
+    const errorColor = Color.fromRGBO(255, 234, 238, 1);
+    const fillColor = Color.fromRGBO(222, 231, 240, .57);
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 60,
+      decoration: BoxDecoration(
+        color: fillColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.transparent),
+      ),
+    );
+		final controller = TextEditingController();
+  	final focusNode = FocusNode();
+
 		return SafeArea(
 			child: Scaffold(
 				appBar: AppBar(
@@ -99,7 +116,7 @@ class TaskDetailScreen extends StatelessWidget {
 												FilledButton(
 													style: ButtonStyle(
 														backgroundColor: MaterialStateProperty.all(const Color(0xffe20613)),
-														padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+														padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 25, vertical: 6)),
 													),
 													child: const Icon(Icons.download, color: Colors.white, size: 30),
 													onPressed: () {},
@@ -122,7 +139,81 @@ class TaskDetailScreen extends StatelessWidget {
 
 								ElevatedButton(
 									style: primaryButtonStyle(),
-									onPressed: () {},
+									onPressed: () {
+										Get.defaultDialog(
+											// contentPadding: const EdgeInsets.all(20),
+											titlePadding: const EdgeInsets.only(top: 20),
+											title: "Aprobar tarea",
+											content: Column(
+												children: [
+													const Text("¿Deseas aprobar esta tarea?"),
+													const SizedBox(height: 20),
+													Row(
+														mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+														children: [
+															OutlinedButton(
+																style: loginOutlineGrayButtonStyle(),
+																onPressed: () => Get.back(),
+																child: const Text("Cancelar"),
+															),
+
+															ElevatedButton(
+																style: primaryButtonStyle(),
+																onPressed: () => Get.defaultDialog(
+																	title: "Aprobar tarea",
+																	content: Column(
+																		children: [
+																			const Text("Ingresa tu PIN para aprobar la tarea"),
+																			const SizedBox(height: 20),
+																			Pinput(
+																				length: length,
+																				controller: controller,
+																				focusNode: focusNode,
+																				defaultPinTheme: defaultPinTheme,
+																				obscureText: true,
+																				focusedPinTheme: defaultPinTheme.copyWith(
+																					height: 68,
+																					width: 64,
+																					decoration: defaultPinTheme.decoration!.copyWith(
+																						border: Border.all(color: borderColor),
+																					),
+																				),
+																				errorPinTheme: defaultPinTheme.copyWith(
+																					decoration: BoxDecoration(
+																						color: errorColor,
+																						borderRadius: BorderRadius.circular(8),
+																					),
+																				),
+																				onChanged: (String pin) {
+																					print('Current pin:$pin');
+																				},
+																				onSubmitted: (String pin) {
+																					print('Current pin:$pin');
+																				},
+																			),
+																			const SizedBox(height: 20),
+																			OutlinedButton(
+																				style: loginOutlineGrayButtonStyle(),
+																				onPressed: () => Get.back(),
+																				child: const Text("Cancelar"),
+																			),
+
+																			ElevatedButton(
+																				style: primaryButtonStyle(),
+																				onPressed: () => Get.back(),
+																				child: const Text("Aprobar"),
+																			),
+																		],
+																	),
+																),
+																child: const Text("Aprobar"),
+															),
+														],
+													)
+												],
+											),
+										);
+									},
 									child: const Text("Aprobar"),
 								),
 							],

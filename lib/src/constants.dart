@@ -16,7 +16,7 @@ InputDecoration formFieldGreyStyle() => const InputDecoration(
 ButtonStyle primaryButtonStyle() => ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff3e444e)),
   foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 50, vertical: 20)),
+  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50.0),
@@ -50,7 +50,7 @@ ButtonStyle loginOutlineButtonStyle() => ButtonStyle(
 
 ButtonStyle loginOutlineGrayButtonStyle() => ButtonStyle(
 	foregroundColor: MaterialStateProperty.all<Color>(const Color(0xff111b31)),
-	padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 50, vertical: 20)),
+	padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
 	side: MaterialStateProperty.all<BorderSide>(const BorderSide(color: Color(0xff111b31) )),
 	shape: MaterialStateProperty.all<RoundedRectangleBorder>(
 		RoundedRectangleBorder(
