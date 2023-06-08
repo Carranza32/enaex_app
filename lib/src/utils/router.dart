@@ -6,11 +6,15 @@ class Routes {
 	static final route = [
 		GetPage(
 			name: '/login',
-			page: () => const LoginScreen(),
+			page: () => LoginScreen(),
 		),
     GetPage(
-      name: '/tabs',
+      name: '/home',
       page: () => TabScreen(),
     ),
+		GetPage(
+			name: '/taskDetail',
+			page: () => TaskDetailScreen(),
+		)
 	];
 }
