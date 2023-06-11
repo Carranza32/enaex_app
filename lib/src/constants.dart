@@ -58,3 +58,16 @@ ButtonStyle loginOutlineGrayButtonStyle() => ButtonStyle(
 		),
 	),
 );
+
+BoxDecoration containerCardDecoration({Color color = Colors.white, double radius = 10}) => BoxDecoration(
+	borderRadius: BorderRadius.circular(radius),
+	color: color,
+	boxShadow: const [
+		BoxShadow(
+			offset: Offset(0, 3),
+			spreadRadius: -4,
+			blurRadius: 10,
+			color: Color.fromRGBO(0, 0, 0, 0.2),
+		),
+	],
+);
