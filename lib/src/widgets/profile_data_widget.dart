@@ -11,6 +11,27 @@ class ProfileDataTabWidget extends StatelessWidget {
 			child: Column(
 				crossAxisAlignment: CrossAxisAlignment.start,
 				children: [
+					Row(
+						children: [
+							const CircleAvatar(
+								radius: 30.0,
+								backgroundImage: AssetImage("assets/Emma_Watson_2013.jpg"),
+								backgroundColor: Colors.transparent,
+							),
+							const SizedBox(width: 15),
+							Container(
+								alignment: Alignment.centerRight,
+								child: ElevatedButton(
+									onPressed: () => _showMessage("Información actualizada"),
+									style: primaryButtonStyle(verticalPadding: 10, horizontalPadding: 18),
+									child: const Text("Cargar imagen"),
+								),
+							)
+						],
+					),
+
+					const SizedBox(height: 20),
+
 					const Text("Nombre y Apellido"),
 					const SizedBox(height: 10),
 					TextFormField(
