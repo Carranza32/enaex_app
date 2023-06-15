@@ -1,7 +1,9 @@
+import 'package:d_chart/d_chart.dart';
 import 'package:enaex_app/src/widgets/my_segmented_control.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
+import 'package:get/get.dart';
 
 
 class DashboardScreen extends StatelessWidget {
@@ -18,8 +20,7 @@ class DashboardScreen extends StatelessWidget {
 					title: const Text('Dashboard'),
 				),
 				body: ListView(
-					children: [					
-
+					children: [
 						Container(
 							margin: EdgeInsets.all(20),
 							padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -35,24 +36,34 @@ class DashboardScreen extends StatelessWidget {
 									),
 								],
 							),
-							child: const Row(
+							child: Row(
+								mainAxisAlignment: MainAxisAlignment.spaceBetween,
 								children: [
-									CircleAvatar(
-										radius: 30.0,
-										backgroundImage: AssetImage("assets/Emma_Watson_2013.jpg"),
-										backgroundColor: Colors.transparent,
-									),
-									SizedBox(width: 15),
-									Column(
-										crossAxisAlignment: CrossAxisAlignment.start,
+									const Row(
 										children: [
-											Text("Nombre Apellido", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-											SizedBox(height: 5),
-											Text("Cargo/Posicion", style: TextStyle(color: Colors.white)),
+											CircleAvatar(
+												radius: 30.0,
+												backgroundImage: AssetImage("assets/Emma_Watson_2013.jpg"),
+												backgroundColor: Colors.transparent,
+											),
+											SizedBox(width: 15),
+											Column(
+												crossAxisAlignment: CrossAxisAlignment.start,
+												children: [
+													Text("Nombre Apellido", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+													SizedBox(height: 5),
+													Text("Cargo/Posicion", style: TextStyle(color: Colors.white)),
+												],
+											),
 										],
 									),
+
+									IconButton(
+										icon: Icon(Icons.settings, color: Colors.white, size: 20),
+										onPressed: () => Get.toNamed('/settings'),
+									)
 								],
-							),
+							)
 						),
 					
 						const SizedBox(height: 0),
@@ -66,56 +77,37 @@ class DashboardScreen extends StatelessWidget {
 
 						Container(
 							padding: const EdgeInsets.all(20),
-							height: 200,
-							child: BarChart(
-								BarChartData(
-									borderData: FlBorderData(show: false),
-									barGroups: data
-										.asMap()
-										.map((i, value) => MapEntry(
-											i,
-											BarChartGroupData(
-												x: i,
-												barRods: [
-													BarChartRodData(
-														toY: value,
-														borderRadius: const BorderRadius.all(Radius.circular(0)),
-														color: const Color(0xff01b8aa),
-													),
+							height: 250,
+							child: DChartBar(
+								data: const [
+										{
+												'id': 'Bar',
+												'data': [
+														{'domain': 'Lu 17', 'measure': 6},
+														{'domain': 'Vi 14', 'measure': 1},
+														{'domain': 'Ju 13', 'measure': 11},
+														{'domain': 'Mi 12', 'measure': 0},
+														{'domain': 'Mar 13', 'measure': 13},
+														{'domain': 'Vi 07', 'measure': 2},
+														{'domain': 'Mi 05', 'measure': 3},
 												],
-											),
-										))
-										.values
-										.toList(),
-									alignment: BarChartAlignment.spaceAround,
-									titlesData: FlTitlesData(
-										show: true,
-										bottomTitles: AxisTitles(
-											sideTitles: SideTitles(
-												showTitles: true,
-												getTitlesWidget: (double value, _) {
-													switch (value.toInt()) {
-														case 0:
-															return const Text('L');
-														case 1:
-															return const Text('M');
-														case 2:
-															return const Text('M');
-														case 3:
-															return const Text('J');
-														case 4:
-															return const Text('V');
-														case 5:
-															return const Text('S');
-														default:
-															return const Text('');
-													}
-												},
-											),
-										),
-										leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-									),
-								),
+										},
+								],
+								domainLabelPaddingToAxisLine: 16,
+								axisLineTick: 1,
+								axisLinePointTick: 1,
+								axisLinePointWidth: 1,
+								axisLineColor: const Color(0xff01b8aa),
+								measureLabelPaddingToAxisLine: 16,
+								barColor: (barData, index, id) => const Color(0xff01b8aa),
+								barValue: (barData, index) => barData['measure'].toString(),
+								barValuePosition: BarValuePosition.inside,
+								barValueColor: Colors.white,
+								showMeasureLine: true,
+								showDomainLine: true,
+								showBarValue: true,
+								animate: true,
+								verticalDirection: false,
 							),
 						),
 					
@@ -164,7 +156,7 @@ class DashboardScreen extends StatelessWidget {
 
 						Container(
 							padding: const EdgeInsets.all(10),
-							height: 250,
+							height: 350,
 							decoration: const BoxDecoration(
 								borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
 								color: Color(0xff3e444e),
@@ -214,35 +206,44 @@ class DashboardScreen extends StatelessWidget {
 									const SizedBox(height: 10),
 									Container(												
 										padding: const EdgeInsets.all(20),
+										margin: const EdgeInsets.symmetric(horizontal: 45),
 										decoration: BoxDecoration(
 											borderRadius: BorderRadius.circular(10),
 											color: Colors.white,
 										),
-										child: const Column(
+										child: Column(
 											children: [
-												Text("Cumplimiento % OT", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-												SizedBox(height: 5),
-												Text("65%", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-                        AnimatedRadialGauge(
-                          initialValue: 65,
-                          child: const Text('65%'),
-                          value: 65,
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.elasticOut,
-                          progressBar: const GaugeRoundedProgressBar(
-                            color: Color(0xFFB4C2F8),
-                          ),
-                          axis: GaugeAxis(
-                          min: 0,
-                          max: 100,
-                          degrees: 180,
-                          /// Set the background color and axis thickness.
-                          style: const GaugeAxisStyle(
-                              thickness: 20,
-                              background: Color(0xFFDFE2EC),
-                            ),
-                          ),
-                        )
+												const Text("Cumplimiento % OT", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+												const SizedBox(height: 5),
+                        
+												Container(
+													height: 150,
+													child: DChartGauge(
+														donutWidth: 15,
+														data: const [
+																{'domain': 'Off', 'measure': 24.5},
+														],
+														fillColor: (pieData, index) {
+															switch (pieData['domain']) {
+																case 'Off':
+																	return const Color(0xff01b8aa);
+																case 'Warm':
+																	return Colors.orange;
+																default:
+																	return Colors.red;
+															}
+														},
+														showLabelLine: false,
+														animate: true,
+														labelPosition: PieLabelPosition.outside,
+														labelFontSize: 20,
+														pieLabel: (pieData, index) {
+															return "${pieData['measure']}%";
+														},
+														labelPadding: 0,
+														labelColor: Colors.black,
+												),
+												)
 											],
 										),
 									),

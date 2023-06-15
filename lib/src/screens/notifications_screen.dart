@@ -21,7 +21,7 @@ class NotificationsScreen extends StatelessWidget {
 									left: BorderSide(
 										style: BorderStyle.solid,
 										color: Color(0xff01b8aa),
-										width: 7,										
+										width: 7,
 									),
 								),
 								color: Colors.white,
@@ -34,21 +34,20 @@ class NotificationsScreen extends StatelessWidget {
 									),
 								],
 							),
-							child: Row(		
+							child: Column(
 								crossAxisAlignment: CrossAxisAlignment.start,
-								mainAxisAlignment: MainAxisAlignment.spaceBetween,
 								children: [
-									const Column(
-										crossAxisAlignment: CrossAxisAlignment.start,
+									Row(
+										mainAxisAlignment: MainAxisAlignment.spaceBetween,
 										children: [
-											Text("Agregado a las 12:11 - 18/01/2023"),													
-											SizedBox(height: 10),
-											Text("¡Se ha agregado una nueva tarea en Pendientes!"),
-											SizedBox(height: 10),
-											Text("Permiso Trabajo Seguro N°: PD - 348. Retiro Aislación"),
+											Text("Agregado a las 12:11 - 18/01/2023", style: TextStyle(color: Colors.grey[700])),
+											Icon(Icons.access_time, color: Colors.grey[700], size: 16)
 										],
 									),
-									Icon(Icons.access_time, color: Colors.grey[700])
+									const SizedBox(height: 10),
+									const Text("¡Se ha agregado una nueva tarea en Pendientes!", style: TextStyle(fontWeight: FontWeight.bold)),
+									const SizedBox(height: 10),
+									Text("Permiso Trabajo Seguro N°: PD - 348. Retiro Aislación", style: TextStyle(color: Colors.grey[700])),
 								],
 							),
 						);

@@ -13,10 +13,21 @@ InputDecoration formFieldGreyStyle() => const InputDecoration(
 	),
 );
 
-ButtonStyle primaryButtonStyle() => ButtonStyle(
+InputDecoration formFieldOutlineStyle() => const InputDecoration(
+	iconColor: Color(0xff111b31),
+	labelStyle: TextStyle(color: Color(0xff111b31)),
+	filled: false,
+	contentPadding: EdgeInsets.only(left: 20),
+	border: OutlineInputBorder(
+		borderRadius: BorderRadius.all(Radius.circular(50.0)),
+		borderSide: BorderSide(color: Color(0xff111b31)),
+	),
+);
+
+ButtonStyle primaryButtonStyle({double horizontalPadding = 50, double verticalPadding = 10}) => ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff3e444e)),
   foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
+  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding)),
   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
     RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50.0),

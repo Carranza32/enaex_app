@@ -1,3 +1,4 @@
+import 'package:enaex_app/src/screens/settings_screen.dart';
 import 'package:get/get.dart';
 
 import '../screens/index.dart';
@@ -15,6 +16,10 @@ class Routes {
 		GetPage(
 			name: '/taskDetail',
 			page: () => TaskDetailScreen(),
-		)
+		),
+		GetPage(
+			name: '/settings',
+			page: () => SettingsScreen(),
+		),
 	];
 }

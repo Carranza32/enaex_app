@@ -7,6 +7,7 @@ class TaskFilesWidegt extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 		return ListView.builder(
+			shrinkWrap: true,
 			itemCount: 3,
 			itemBuilder: (context, index) {
 				return Container(
@@ -34,9 +35,9 @@ class TaskFilesWidegt extends StatelessWidget {
 							FilledButton(
 								style: ButtonStyle(
 									backgroundColor: MaterialStateProperty.all(const Color(0xffe20613)),
-									padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 25, vertical: 6)),
+									padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 25, vertical: 8)),
 								),
-								child: const Icon(Icons.download, color: Colors.white, size: 30),
+								child: const Icon(Icons.download, color: Colors.white),
 								onPressed: () {},
 							)
 						],

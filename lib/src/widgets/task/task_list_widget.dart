@@ -29,7 +29,7 @@ class TaskListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
 					onTap: () {
-						Get.toNamed('/taskDetail');
+						Get.toNamed('/taskDetail', arguments: [status]);
 					},
 					child: Container(
 						padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 15),

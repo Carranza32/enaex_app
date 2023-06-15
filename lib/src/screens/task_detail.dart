@@ -1,4 +1,6 @@
 import 'package:enaex_app/src/controllers/TaskDetailController.dart';
+import 'package:enaex_app/src/widgets/task/approve_task_widget.dart';
+import 'package:enaex_app/src/widgets/task/rejected_task_widget.dart';
 import 'package:enaex_app/src/widgets/task/task_files_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,25 @@ class TaskDetailScreen extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
+		var args = Get.arguments;
+		String status = args[0] ?? 'pending';
+
+		IconData icon;
+    Color color = Colors.grey;
+
+    if (status == 'pending') {
+      icon = Icons.access_time_rounded;
+      color = Colors.grey;
+    } else if (status == 'approved') {
+      icon = Icons.check_circle_outline_rounded;
+      color = Colors.green;
+    } else if (status == 'rejected') {
+      icon = Icons.warning_amber_rounded;
+      color = Colors.red;
+    } else {
+      icon = Icons.work;
+    }
+
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 60,
@@ -26,10 +47,26 @@ class TaskDetailScreen extends StatelessWidget {
 				appBar: AppBar(
 					title: const Text("Detalle de tarea"),
 				),
-				body: Column(
+				body: Column(		
+					crossAxisAlignment: CrossAxisAlignment.start,			
 					children: [
+						(status == "rejected") ? const Padding(
+							padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+							child: Column(
+								crossAxisAlignment: CrossAxisAlignment.start,
+								children: [
+									Text("Motivos de rechazo", style: TextStyle(fontWeight: FontWeight.bold)),
+									SizedBox(height: 10),
+									Text("Ejemplo de motivo de rechazo primario"),
+									SizedBox(height: 5),
+									Text("Ejemplo de motivo de rechazo secundario"),
+								]
+							),
+						) : Container(),
+
+
 						Container(
-							padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+							padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
 							margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
 							decoration: containerCardDecoration(),
 							child: Column(
@@ -45,11 +82,15 @@ class TaskDetailScreen extends StatelessWidget {
 												],
 											),
 
-											Icon(Icons.access_time, color: Colors.grey[700])
+											Container(
+												alignment: Alignment.topCenter,
+												child: Icon(icon, color: color),
+											)
 										],
 									),
 									const SizedBox(height: 20),
-									const Text("Descripción del trabajo: Retiro Aislación, Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.")
+									Text("Descripción del trabajo: Retiro Aislación, Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+									style: TextStyle(color: Colors.grey[700]),)
 								],
 							),
 						),
@@ -62,31 +103,26 @@ class TaskDetailScreen extends StatelessWidget {
 							child: const Text("Documentos Adjuntos", style: TextStyle(color: Colors.white)),
 						),
 
-						Expanded(
-							child: Column(
-								children: [
-									const TaskFilesWidegt(),
-									const SizedBox(height: 20),
+						const TaskFilesWidegt(),
 
-									Row(
-										mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-										children: [
-											OutlinedButton(
-												style: loginOutlineGrayButtonStyle(),
-												onPressed: () => _rejectDialog(controller, defaultPinTheme),
-												child: const Text("Rechazar"),
-											),
+						const SizedBox(height: 20),
 
-											ElevatedButton(
-												style: primaryButtonStyle(),
-												onPressed: () => _approveDialog(controller, defaultPinTheme),
-												child: const Text("Aprobar"),
-											),
-										],
-									)
-								],
-							)
-						),
+						(status == 'pending') ? Row(
+							mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+							children: [
+								OutlinedButton(
+									style: loginOutlineGrayButtonStyle(),
+									onPressed: () => _rejectDialog(controller, defaultPinTheme),
+									child: const Text("Rechazar"),
+								),
+
+								ElevatedButton(
+									style: primaryButtonStyle(),
+									onPressed: () => _approveDialog(controller, defaultPinTheme),
+									child: const Text("Aprobar"),
+								),
+							],
+						) : Container()
 					],
 				),
 			),
@@ -140,7 +176,7 @@ _rejectDialog(controller, defaultPinTheme){
 		),
 		confirm: ElevatedButton(
 			style: primaryButtonStyle(),
-			onPressed: () => _askForPin(controller, defaultPinTheme, "Rechazar tarea"),
+			onPressed: () => _askForPin(controller, defaultPinTheme, "Rechazar tarea", isApproved: false),
 			child: const Text("Continuar"),
 		),
 	);
@@ -167,7 +203,7 @@ _approveDialog(controller, defaultPinTheme){
 
 						ElevatedButton(
 							style: primaryButtonStyle(),
-							onPressed: () => _askForPin(controller, defaultPinTheme, "Aprobar tarea"),
+							onPressed: () => _askForPin(controller, defaultPinTheme, "Aprobar tarea", isApproved: true),
 							child: const Text("Aprobar"),
 						),
 					],
@@ -177,7 +213,7 @@ _approveDialog(controller, defaultPinTheme){
 	);
 }
 
-_askForPin(controller, defaultPinTheme, title){
+_askForPin(controller, defaultPinTheme, title, {required bool isApproved}){
 	_closeDialog();
 				
 	Get.defaultDialog(
@@ -189,8 +225,8 @@ _askForPin(controller, defaultPinTheme, title){
 			defaultPinTheme: defaultPinTheme,
 			obscureText: true,
 			focusedPinTheme: defaultPinTheme.copyWith(
-				height: 68,
-				width: 64,
+				height: 68.0,
+				width: 64.0,
 				decoration: defaultPinTheme.decoration!.copyWith(
 					border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
 				),
@@ -216,8 +252,23 @@ _askForPin(controller, defaultPinTheme, title){
 		confirm: ElevatedButton(
 			style: primaryButtonStyle(),
 			onPressed: () {
-				_closeDialog();
-				_closeDialog();
+				Get.back();
+
+				if(isApproved){
+					Navigator.of(Get.context!).push(
+						MaterialPageRoute(
+							builder: (context) => const ApproveTaskWidget(),
+							fullscreenDialog: true,
+						),
+					);
+				}else{
+					Navigator.of(Get.context!).push(
+						MaterialPageRoute(
+							builder: (context) => const RejectTaskWidget(),
+							fullscreenDialog: true,
+						),
+					);
+				}
 			},
 			child: const Text("Continuar"),
 		),
