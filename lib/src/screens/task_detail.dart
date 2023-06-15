@@ -134,7 +134,7 @@ _closeDialog(){
 	Get.back();
 }
 
-List<Widget> _rejectOptions(){
+List<Widget> _rejectOptions(controller, defaultPinTheme,){
 	return [
 		RadioListTile(
 			title: const Text("Ut enim ad minima veniam, quis Nostrum."),
@@ -160,6 +160,28 @@ List<Widget> _rejectOptions(){
 			groupValue: 1,
 			onChanged: (value) {},
 		),
+
+    const SizedBox(height: 20),
+
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [								
+        OutlinedButton(
+          style: loginOutlineGrayButtonStyle().copyWith(
+            padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+          ),
+          onPressed: () => Get.back(),
+          child: const Text("Cancelar"),
+        ),
+        ElevatedButton(
+          style: primaryButtonStyle().copyWith(
+            padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+          ),
+          onPressed: () => _askForPin(controller, defaultPinTheme, "Rechazar tarea", isApproved: false),
+          child: const Text("Continuar"),
+        ),
+      ],
+    )
 	];
 }
 
@@ -167,17 +189,7 @@ _rejectDialog(controller, defaultPinTheme){
 	Get.defaultDialog(
 		title: "¿Por qué rechazas la tarea?",
 		content: Column(
-			children: _rejectOptions(),
-		),
-		cancel: OutlinedButton(
-			style: loginOutlineGrayButtonStyle(),
-			onPressed: () => Get.back(),
-			child: const Text("Cancelar"),
-		),
-		confirm: ElevatedButton(
-			style: primaryButtonStyle(),
-			onPressed: () => _askForPin(controller, defaultPinTheme, "Rechazar tarea", isApproved: false),
-			child: const Text("Continuar"),
+			children: _rejectOptions(controller, defaultPinTheme),
 		),
 	);
 }
@@ -196,13 +208,17 @@ _approveDialog(controller, defaultPinTheme){
 					mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 					children: [
 						OutlinedButton(
-							style: loginOutlineGrayButtonStyle(),
+							style: loginOutlineGrayButtonStyle().copyWith(
+                padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+              ),
 							onPressed: () => _closeDialog(),
 							child: const Text("Cancelar"),
 						),
 
 						ElevatedButton(
-							style: primaryButtonStyle(),
+							style: primaryButtonStyle().copyWith(
+                padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+              ),
 							onPressed: () => _askForPin(controller, defaultPinTheme, "Aprobar tarea", isApproved: true),
 							child: const Text("Aprobar"),
 						),
@@ -218,59 +234,75 @@ _askForPin(controller, defaultPinTheme, title, {required bool isApproved}){
 				
 	Get.defaultDialog(
 		title: "Digite PIN de verificación",
-		content: Pinput(
-			length: controller.pinLength,
-			controller: controller.pinController,
-			focusNode: controller.focusNode,
-			defaultPinTheme: defaultPinTheme,
-			obscureText: true,
-			focusedPinTheme: defaultPinTheme.copyWith(
-				height: 68.0,
-				width: 64.0,
-				decoration: defaultPinTheme.decoration!.copyWith(
-					border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
-				),
-			),
-			errorPinTheme: defaultPinTheme.copyWith(
-				decoration: BoxDecoration(
-					color: const Color.fromRGBO(255, 234, 238, 1),
-					borderRadius: BorderRadius.circular(8),
-				),
-			),
-			onChanged: (String pin) {
-				print('Current pin:$pin');
-			},
-			onSubmitted: (String pin) {
-				print('Current pin:$pin');
-			},
-		),
-		cancel: OutlinedButton(
-			style: loginOutlineGrayButtonStyle(),
-			onPressed: () => Get.back(),
-			child: const Text("Cancelar"),
-		),
-		confirm: ElevatedButton(
-			style: primaryButtonStyle(),
-			onPressed: () {
-				Get.back();
+		content: Column(
+      children: [
+        Pinput(
+          length: controller.pinLength,
+          controller: controller.pinController,
+          focusNode: controller.focusNode,
+          defaultPinTheme: defaultPinTheme,
+          obscureText: true,
+          focusedPinTheme: defaultPinTheme.copyWith(
+            height: 68.0,
+            width: 64.0,
+            decoration: defaultPinTheme.decoration!.copyWith(
+              border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
+            ),
+          ),
+          errorPinTheme: defaultPinTheme.copyWith(
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(255, 234, 238, 1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          onChanged: (String pin) {
+            print('Current pin:$pin');
+          },
+          onSubmitted: (String pin) {
+            print('Current pin:$pin');
+          },
+        ),
 
-				if(isApproved){
-					Navigator.of(Get.context!).push(
-						MaterialPageRoute(
-							builder: (context) => const ApproveTaskWidget(),
-							fullscreenDialog: true,
-						),
-					);
-				}else{
-					Navigator.of(Get.context!).push(
-						MaterialPageRoute(
-							builder: (context) => const RejectTaskWidget(),
-							fullscreenDialog: true,
-						),
-					);
-				}
-			},
-			child: const Text("Continuar"),
-		),
+        const SizedBox(height: 20),
+        
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            OutlinedButton(
+              style: loginOutlineGrayButtonStyle().copyWith(
+                padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+              ),
+              onPressed: () => Get.back(),
+              child: const Text("Cancelar"),
+            ),
+            ElevatedButton(
+              style: primaryButtonStyle().copyWith(
+                padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+              ),
+              onPressed: () {
+                Get.back();
+
+                if(isApproved){
+                  Navigator.of(Get.context!).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ApproveTaskWidget(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                }else{
+                  Navigator.of(Get.context!).push(
+                    MaterialPageRoute(
+                      builder: (context) => const RejectTaskWidget(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                }
+              },
+              child: const Text("Continuar"),
+            ),
+          ],
+        )
+      ],
+    ),
 	);
 }

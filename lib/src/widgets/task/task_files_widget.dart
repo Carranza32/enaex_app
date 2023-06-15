@@ -1,5 +1,6 @@
 import 'package:enaex_app/src/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TaskFilesWidegt extends StatelessWidget {
 	const TaskFilesWidegt({super.key});
@@ -38,7 +39,16 @@ class TaskFilesWidegt extends StatelessWidget {
 									padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 25, vertical: 8)),
 								),
 								child: const Icon(Icons.download, color: Colors.white),
-								onPressed: () {},
+								onPressed: () {
+                  Get.showSnackbar(
+                    const GetSnackBar(
+                      message: "Descargando archivo...",
+                      duration: Duration(seconds: 2),
+                      backgroundColor: Colors.green,
+                      icon: Icon(Icons.download_done_rounded, color: Colors.white),
+                    ),
+                  );
+                },
 							)
 						],
 					),
